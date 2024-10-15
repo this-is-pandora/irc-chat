@@ -2,4 +2,6 @@
 
 class Channel
 {
+public:
+    Channel();
 };

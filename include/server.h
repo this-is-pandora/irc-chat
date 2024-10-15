@@ -19,23 +19,30 @@
 #define MSG_SIZE 1024
 #define REPLY_SIZE 65536
 
+using namespace std;
+
 class Server
 {
 private:
     WSADATA wsaData;
     int wsaerr, port;
     WORD wVersion;
-    SOCKET server;
+    SOCKET server_fd;
     sockaddr_in ipv4_addr;
-    // TODO: implement Client & Channel class
-    std::map<std::string, int *> clients;
-    std::map<std::string, int *> channels;
-    long rc;
-    std::string password; // hash of the password
+
+    map<string, int *> clients;
+    map<string, int *> channels;
+
+    // long rc;
+    string password, name;
     int startWinsock();
+    void closeServerFailure(char *msg);
+    void handleIncomingClient();
+    void authenticateUser();
 
 public:
-    Server();
+    Server(string name, string password);
+    ~Server();
     void startServer();
     void closeServer();
 };
