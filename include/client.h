@@ -1,12 +1,9 @@
 #pragma once
 #include <iostream>
-#include <vector>
-#include <map>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-// socket libraries
 #if defined(_WIN32) || defined(_WIN64)
 #include <winsock2.h>
 #include <ws2tcpip.h>

@@ -31,7 +31,6 @@ void Server::startServer()
     }
 
     ipv4_addr.sin_family = AF_INET; // use IPv4 addresses
-    // InetPton(AF_INET, "127.0.0.1", &ipv4_addr.sin_addr.s_addr);
     ipv4_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     ipv4_addr.sin_port = htons(6667);
     memset(&(ipv4_addr.sin_zero), '\0', 8);
@@ -43,6 +42,10 @@ void Server::startServer()
     if (listen(server_fd, SOMAXCONN) == SOCKET_ERROR)
     {
         closeServerFailure("Listening failed");
+    }
+    else
+    {
+        cout << "Socket is listening..." << endl;
     }
 }
 

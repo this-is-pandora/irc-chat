@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include <map>
 #include <errno.h>
 #include <stdlib.h>
@@ -26,7 +25,6 @@ class Server
 private:
     WSADATA wsaData;
     int wsaerr, port;
-    WORD wVersion;
     SOCKET server_fd;
     sockaddr_in ipv4_addr;
 
