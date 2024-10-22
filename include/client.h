@@ -22,12 +22,14 @@ private:
     int wsaerr;
     SOCKET client_fd;
     string username;
+    sockaddr_in server_addr;
 
 public:
     Client(string username);
     ~Client();
-    void initializeClient();
-    void connectToServer(char *ip_addr, int port, string password);
-    void closeConnection();
-    void sendMessage(char *msg);
+    void initialize();
+    int setUserName(char *name);
+    int connectServer(char *ip_addr, int port, string password);
+    int disconnect();
+    int sendMessage(char *msg);
 };

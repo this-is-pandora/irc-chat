@@ -4,8 +4,9 @@
 
 int main(int argc, char *argv[])
 {
+    // placeholder code for now
     Server *server = new Server("hello world", "example");
-    server->startServer();
+    server->createServer();
     server->closeServer();
     return 0;
 }

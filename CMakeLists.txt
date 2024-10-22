@@ -17,7 +17,6 @@ include_directories(
 
 file(GLOB ALL_SRCS 
     "${PROJECT_SOURCE_DIR}/include/*.h"
-    "${PROJECT_SOURCE_DIR}/include/security/*.h"
     "${PROJECT_SOURCE_DIR}/src/*.cpp"
 )
 
