@@ -58,6 +58,8 @@ int Server::acceptClient()
     SOCKET client_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     sockaddr_in cli_addr;
     int cli_len;
+    char hostname[NI_MAXHOST];
+
     cli_len = sizeof(cli_addr);
     if ((client_fd = accept(server_fd, (sockaddr *)&cli_addr, &cli_len)) == INVALID_SOCKET)
     {
@@ -67,8 +69,15 @@ int Server::acceptClient()
     }
     pollfd client_poll = {client_fd, POLLIN, 0};
     _pollfds.push_back(client_poll);
-    // TODO: create a collection of connected client sockets
-    clients["name"] = client_fd;
+
+    if (getnameinfo((struct sockaddr *)&cli_addr, sizeof(cli_addr), hostname, NI_MAXHOST, NULL, 0, NI_NUMERICSERV) != 0)
+    {
+        perror("Can't get hostname");
+        close(client_fd);
+    }
+    // TODO: create a map of connected client sockets
+    Client *cli = new Client(hostname);
+    _clients[hostname] = cli;
 
     // TODO: send an MOTD response to the client and user count
     return 0;
@@ -94,8 +103,15 @@ int Server::start()
             if (it->revents & POLLIN)
             {
                 // TODO: complete and test
-                acceptClient();
-                break;
+                if (it->fd == server_fd)
+                {
+                    acceptClient();
+                    break;
+                }
+                else
+                {
+                    handleMessage(it->fd);
+                }
             }
             else
             {
@@ -108,6 +124,40 @@ int Server::start()
     }
     return 0;
 }
+
+int Server::handleMessage(int fd)
+{
+    // TODO
+    try
+    {
+        // Client *cli = _clients.at(fd);
+        string msg = readMessage(fd);
+        // TODO: pass to command handler
+    }
+    catch (const exception &e)
+    {
+        perror(e.what());
+        throw runtime_error("error handling message");
+    }
+    return 0;
+}
+
+string Server::readMessage(int fd)
+{
+    char buf[MSG_SIZE];
+    string message;
+    int bytes = recv(fd, buf, MSG_SIZE, 0);
+    if (bytes == -1)
+    {
+        perror("Can't read message");
+    }
+    else
+    {
+        message = string(buf, bytes);
+    }
+    return message;
+}
+
 void Server::closeServerFailure(char *msg)
 {
     perror(msg);

@@ -20,8 +20,13 @@ class Client
 private:
     WSADATA wsaData;
     int wsaerr;
+
     SOCKET client_fd;
     string username;
+    string hostname;
+    string nickname;
+    string realname;
+    bool registered;
     sockaddr_in server_addr;
 
 public:
@@ -29,7 +34,8 @@ public:
     ~Client();
     void initialize();
     int setUserName(char *name);
-    int connectServer(char *ip_addr, int port, string password);
+    char *getUserName();
+    int connectServer(char *ip_addr = "127.0.0.1", int port = 6667, string password);
     int disconnect();
     int sendMessage(char *msg);
 };

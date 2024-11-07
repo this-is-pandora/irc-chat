@@ -5,10 +5,11 @@ An implementation of the IRC protocol using C++ and Winsock.
 
 ## Planning and Requirements
 - [ ] Ability to create and shutdown IRC servers
-- [ ] Ability to connect to IRC servers using a client
-- [ ] Runs through the command line with a GUI via something like ncurses
-- [ ] User authentication mechanisms and secure data transmission
-- [ ] Basic security protocols
+- [x] Ability to connect to IRC servers using a client program
+- [ ] Broadcast messages
+- [ ] Private messaging between users
+- [ ] Runs through the command line with a terminal GUI
+- [ ] A user authentication mechanism and secure data transmission
 
 ## Features
 

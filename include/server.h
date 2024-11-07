@@ -42,6 +42,10 @@ WINSOCK_API_LINKAGE int WSAAPI WSAPoll(LPWSAPOLLFD fdArray, ULONG fds, INT timeo
 
 using namespace std;
 
+struct client_fd
+{
+};
+
 class Server
 {
 private:
@@ -51,8 +55,8 @@ private:
     sockaddr_in ipv4_addr;
 
     vector<pollfd> _pollfds;
-    map<string, SOCKET> clients;
-    map<string, Channel *> channels;
+    map<char *, Client *> _clients;
+    map<char *, Channel *> _channels;
 
     // long rc;
     string password, name;
@@ -62,6 +66,8 @@ private:
     int getClientInfo();
     int disconnectClient();
     int authenticateClient();
+    int handleMessage(int fd);
+    string readMessage(int fd);
 
 public:
     Server(string name, string password);
