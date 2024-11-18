@@ -36,6 +36,7 @@ WINSOCK_API_LINKAGE int WSAAPI WSAPoll(LPWSAPOLLFD fdArray, ULONG fds, INT timeo
 
 #include "client.h"
 #include "channel.h"
+#include "commands.h"
 
 #define MSG_SIZE 1024
 #define REPLY_SIZE 65536
@@ -60,20 +61,30 @@ private:
 
     // long rc;
     string password, name;
+    // initializing the server
     int startWinsock();
     void closeServerFailure(char *msg);
+    // dealing with clients
     int acceptClient();
     int getClientInfo();
     int disconnectClient();
     int authenticateClient();
+    // registration stuff
+    char *hashPassword(char *pass);
+    void registerClient();
+    // handling messages
     int handleMessage(int fd);
     string readMessage(int fd);
+    void sendMessage(int fd);
+    // handling channels
+    void addChannel(int cid);
+    void removeChannel(int cid);
 
 public:
     Server(string name, string password);
     ~Server();
     int createServer();
     int start();
-    int executeCommand(int command);
+    int executeCommand(enum _COMMANDS command);
     void closeServer();
 };

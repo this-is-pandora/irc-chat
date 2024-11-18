@@ -1,6 +1,6 @@
 #include "../include/server.h"
 #include <ws2tcpip.h>
-#include <functional>
+#include <time.h>
 
 Server::Server(string name, string password)
 {
@@ -14,7 +14,9 @@ Server::~Server()
     if (server_fd)
         closesocket(server_fd);
 }
-
+char *Server::hashPassword(char *pass)
+{
+}
 int Server::createServer()
 {
     int rc = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -132,7 +134,20 @@ int Server::handleMessage(int fd)
     {
         // Client *cli = _clients.at(fd);
         string msg = readMessage(fd);
-        // TODO: pass to command handler
+        /*
+        // calculate time
+        time_t now = time(0);
+        struct tm tstruct;
+        char buf[80];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "%X", &tstruct);
+        string time = string(buf);
+        // final output
+        string to_print = string("[" + time + "] <name> ") + msg;
+        cout << to_print.c_str() << endl;
+        */
+        cout << msg.c_str() << endl;
+        // TODO: interpret commands
     }
     catch (const exception &e)
     {
@@ -175,13 +190,31 @@ void Server::closeServer()
 }
 
 // TODO: commands
-int Server::executeCommand(int command)
+int Server::executeCommand(enum _COMMANDS command)
 {
     switch (command)
     {
-    case 0:
+    case HELP:
         break;
-    case 1:
+    case LIST:
+        break;
+    case JOIN:
+        break;
+    case QUIT:
+        break;
+    case NICK:
+        break;
+    case AWAY:
+        break;
+    case WHOIS:
+        break;
+    case INVITE:
+        break;
+    case KICK:
+        break;
+    case TOPIC:
+        break;
+    case ME:
         break;
     default:
         break;

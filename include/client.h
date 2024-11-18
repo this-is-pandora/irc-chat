@@ -15,6 +15,16 @@
 
 using namespace std;
 
+struct cli_struct
+{
+    SOCKET client_fd;
+    string username;
+    string hostname;
+    string nickname;
+    string realname;
+    bool registered;
+};
+
 class Client
 {
 private:

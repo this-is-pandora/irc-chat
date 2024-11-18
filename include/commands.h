@@ -1,13 +1,16 @@
 #pragma once
 
-#define HELP
-#define LIST
-#define JOIN
-#define QUIT
-#define NICK
-#define AWAY
-#define WHOIS
-#define INVITE
-#define KICK
-#define TOPIC
-#define ME
+enum _COMMANDS
+{
+    HELP,
+    LIST,
+    JOIN,
+    QUIT,
+    NICK,
+    AWAY,
+    WHOIS,
+    INVITE,
+    KICK,
+    TOPIC,
+    ME
+};
